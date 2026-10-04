@@ -3,10 +3,52 @@
 body {
 	font-family: "Roboto", Arial, Helvetica, sans-serif;
 	margin: 0;
-	background: #111;
+	/* Deep, dark yellowish-brown desert base color */
+	background-color: #2b1f0c;
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
+	position: relative;
+	overflow-x: hidden;
+}
+
+/* Animated Sand Particles Layer */
+body::before {
+	content: '';
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 200%;
+	height: 100vh;
+	background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiIHZpZXdCb3g9IjAgMCA4IDgiPgo8ZyBmaWxsPSIjZDlhMzczIiBmaWxsLW9wYWNpdHk9IjAuMjAiPgo8Y2lyY2xlIGN4PSI0IiBjeT0iNCIgcj0iMSIvPgo8L2c+Cjw+c3ZnPg==');
+	background-repeat: repeat;
+	background-size: 16px 16px;
+	animation: windflow 18s linear infinite;
+	z-index: -2;
+	pointer-events: none;
+}
+
+/* Keyframes for sideways wind flow (to the right) */
+@keyframes windflow {
+	0% {
+		transform: translateX(0%);
+	}
+	100% {
+		transform: translateX(-50%);
+	}
+}
+
+/* Subtle Vignette Overlay to depth-enhance the desert mood */
+body::after {
+	content: '';
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+	background: radial-gradient(circle, rgba(43,31,12,0) 40%, rgba(18,12,4,0.75) 100%);
+	z-index: -1;
+	pointer-events: none;
 }
 
 .flex-center {
@@ -26,8 +68,9 @@ body {
 
 /* Navigation bar */
 #sj-nav-bar {
-	background: #1a1a1a;
-	border-bottom: 1px solid #333;
+	background: rgba(26, 26, 26, 0.85);
+	backdrop-filter: blur(8px);
+	border-bottom: 1px solid #423013;
 	display: flex;
 	align-items: center;
 	padding: 8px 12px;
@@ -45,8 +88,8 @@ body {
 }
 
 .sj-nav-btn {
-	background: none;
-	border: 1px solid #444;
+	background: rgba(51, 40, 20, 0.5);
+	border: 1px solid #543f1b;
 	color: #fff;
 	padding: 8px 10px;
 	cursor: pointer;
@@ -59,12 +102,12 @@ body {
 }
 
 .sj-nav-btn:hover {
-	background-color: #333;
-	border-color: #555;
+	background-color: #63491d;
+	border-color: #d4a373;
 }
 
 .sj-nav-btn:active {
-	background-color: #444;
+	background-color: #4a3414;
 }
 
 .sj-nav-btn svg {
@@ -79,8 +122,8 @@ body {
 
 .sj-url-display {
 	width: 100%;
-	background: #222;
-	border: 1px solid #444;
+	background: #1a1207;
+	border: 1px solid #543f1b;
 	color: #eee;
 	padding: 8px 12px;
 	border-radius: 6px;
@@ -129,7 +172,7 @@ body {
 }
 
 .logo-wrapper h1 {
-	color: white;
+	color: #d4a373;
 }
 
 footer {
@@ -153,7 +196,7 @@ footer a,
 footer span {
 	margin: 0 15px;
 	text-decoration: none;
-	color: #fff;
+	color: #c4ab89;
 	font-size: 15px;
 }
 
@@ -163,31 +206,31 @@ footer a {
 
 footer a:hover {
 	text-decoration: underline;
+	color: #fff;
 }
 
 .desc p {
 	width: 560px;
-	color: rgba(253, 253, 253, 0.514);
+	color: rgba(220, 195, 160, 0.7);
 }
 
 #sj-address {
-	background: none;
+	background: rgba(30, 21, 9, 0.6);
 	font-family: inherit;
 	padding: 0px 17px;
 	height: 48px;
-	border: 1px solid rgb(255, 255, 255, 0.2);
-	color: var(--text-color);
-	border-radius: 3px;
+	border: 1px solid rgba(212, 163, 115, 0.3);
+	color: #fff;
 	outline: none;
 	width: 350px;
 	margin-top: 5px;
 	border-radius: 50px;
-	color: #fff;
-	transition: border-radius 0.1s;
+	transition: border-radius 0.1s, border-color 0.2s, background 0.2s;
 }
 
 #sj-address:focus {
-	border: 1px solid rgba(253, 253, 253, 0.514);
+	border: 1px solid #d4a373;
+	background: rgba(30, 21, 9, 0.9);
 	border-radius: 6px;
 }
 
@@ -195,7 +238,7 @@ footer a:hover {
 	border-radius: 10px;
 	padding: 10px;
 	display: block;
-	border: #fff 1px solid;
+	border: #d4a373 1px solid;
 	color: #fff;
 	display: flex;
 	flex-wrap: wrap;
@@ -230,3 +273,4 @@ footer a:hover {
 
 .credit input:checked ~ pre {
 	display: block;
+}
