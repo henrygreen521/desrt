@@ -51,12 +51,10 @@
 				<img class="logo" src="desrt.svg" alt="Scramjet" />
 				<h1>Scramjet | MW</h1>
 			</div>
+			
+			<!-- Rotator text section -->
 			<div class="flex-center desc left-margin">
-				<p>
-					Scramjet is an experimental interception based web proxy designed to
-					evade internet censorship, bypass arbitrary web browser restrictions and
-					innovate web proxy technologies.
-				</p>
+				<p id="rotating-msg" style="text-align: center; font-style: italic;"></p>
 			</div>
 
 			<form id="sj-form" class="flex-center">
@@ -90,6 +88,18 @@
 				</div>
 			</footer>
 		</div>
+
+		<script>
+			// Random message rotator script
+			const messages = [
+				"Desrt? more like desert",
+				"Use chickencoop ubg",
+				"w side project?",
+				"made by greenskid14",
+				"check out the credits"
+			];
+			const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+			document.getElementById('rotating-msg').textContent = randomMsg;
+		</script>
 	</body>
 </html>
-
