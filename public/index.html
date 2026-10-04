@@ -20,6 +20,32 @@
 	</head>
 
 	<body>
+		<!-- Navigation Bar (hidden until browsing) -->
+		<div id="sj-nav-bar" class="sj-nav-bar" style="display: none;">
+			<div class="sj-nav-buttons">
+				<button id="sj-home-btn" class="sj-nav-btn" title="Home">
+					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+						<polyline points="9 22 9 12 15 12 15 22"></polyline>
+					</svg>
+				</button>
+				<button id="sj-back-btn" class="sj-nav-btn" title="Back">
+					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M19 12H5M12 19l-7-7 7-7"/>
+					</svg>
+				</button>
+				<button id="sj-reload-btn" class="sj-nav-btn" title="Reload">
+					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<polyline points="23 4 23 10 17 10"></polyline>
+						<path d="M20.49 15a9 9 0 1 1-2-8.83"></path>
+					</svg>
+				</button>
+			</div>
+			<div class="sj-url-bar-container">
+				<input id="sj-url-display" class="sj-url-display" type="text" readonly />
+			</div>
+		</div>
+
 		<div title="Scramjet Logo" class="flex-center logo-wrapper header-center">
 			<img class="logo" src="sj.png" alt="Scramjet" />
 			<h1>Scramjet | MW</h1>
