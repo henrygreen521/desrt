@@ -24,8 +24,7 @@ body {
 	margin: 0px 16px;
 }
 
-/* Navigation Bar Styles */
-.sj-nav-bar {
+#sj-nav-bar {
 	background: #1a1a1a;
 	border-bottom: 1px solid #333;
 	display: flex;
@@ -46,13 +45,13 @@ body {
 	background: none;
 	border: 1px solid #444;
 	color: #fff;
-	padding: 6px 10px;
+	padding: 8px 10px;
 	cursor: pointer;
-	border-radius: 4px;
+	border-radius: 6px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	transition: background-color 0.2s, border-color 0.2s;
+	transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .sj-nav-btn:hover {
@@ -60,8 +59,8 @@ body {
 	border-color: #555;
 }
 
-.sj-nav-btn:active {
-	background-color: #444;
+.sj-nav-btn svg {
+	display: block;
 }
 
 .sj-url-bar-container {
@@ -74,9 +73,9 @@ body {
 	width: 100%;
 	background: #222;
 	border: 1px solid #444;
-	color: #ccc;
-	padding: 6px 12px;
-	border-radius: 4px;
+	color: #eee;
+	padding: 8px 12px;
+	border-radius: 6px;
 	font-family: "Courier New", Courier, monospace;
 	font-size: 13px;
 	outline: none;
