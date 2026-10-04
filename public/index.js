@@ -49,7 +49,7 @@ let urlUpdateInterval = null;
 if (navigator.registerProtocolHandler) {
 	try {
 		navigator.registerProtocolHandler(
-			"web+desrt",
+			"desrt",
 			window.location.origin + "/?desrt=%s",
 			"Desrt"
 		);
@@ -64,26 +64,31 @@ function handleDesrtProtocol() {
 	const desrtUrl = params.get("desrt");
 	
 	if (desrtUrl) {
-		const url = desrtUrl.replace(/^web\+desrt:\/\//, "");
+		const url = desrtUrl.replace(/^desrt:\/\//, "");
 		
 		if (url === "home") {
-			// Navigate to home
-			if (currentFrame && currentFrame.frame && currentFrame.frame.parentNode) {
-				currentFrame.frame.parentNode.removeChild(currentFrame.frame);
-				currentFrame = null;
-			}
-			mainContent.style.display = "flex";
-			address.value = "";
-			urlDisplay.value = "about:blank";
-			address.focus();
-			// Clean up URL bar
-			window.history.replaceState({}, document.title, "/");
+			showHome();
 		} else {
 			// Handle other desrt:// URLs
 			address.value = url;
 			form.dispatchEvent(new Event("submit"));
 		}
 	}
+}
+
+function showHome() {
+	stopURLTracking();
+
+	if (currentFrame && currentFrame.frame && currentFrame.frame.parentNode) {
+		currentFrame.frame.parentNode.removeChild(currentFrame.frame);
+		currentFrame = null;
+	}
+
+	mainContent.style.display = "flex";
+	address.value = "";
+	urlDisplay.value = "desrt://home";
+	address.focus();
+	window.history.replaceState({}, document.title, "/");
 }
 
 function updateURLDisplay(url) {
@@ -164,18 +169,7 @@ form.addEventListener("submit", async (event) => {
 });
 
 homeBtn.addEventListener("click", () => {
-	stopURLTracking();
-
-	if (currentFrame && currentFrame.frame && currentFrame.frame.parentNode) {
-		currentFrame.frame.parentNode.removeChild(currentFrame.frame);
-		currentFrame = null;
-	}
-
-	// Show main content again
-	mainContent.style.display = "flex";
-	address.value = "";
-	urlDisplay.value = "about:blank";
-	address.focus();
+	showHome();
 });
 
 backBtn.addEventListener("click", () => {
@@ -198,6 +192,15 @@ reloadBtn.addEventListener("click", () => {
 	}
 });
 
-// Handle desrt:// protocol on page load
-document.addEventListener("DOMContentLoaded", handleDesrtProtocol);
-handleDesrtProtocol();
+// Initialize home screen on page load
+document.addEventListener("DOMContentLoaded", () => {
+	showHome();
+	handleDesrtProtocol();
+});
+
+// Handle desrt:// protocol immediately if page is already loaded
+if (document.readyState === "loading") {
+	document.addEventListener("DOMContentLoaded", handleDesrtProtocol);
+} else {
+	handleDesrtProtocol();
+}
