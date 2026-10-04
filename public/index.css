@@ -12,7 +12,7 @@ body {
 	overflow-x: hidden;
 }
 
-/* Randomized Sand Particles Layer using Pure CSS Gradients */
+/* Full-Screen Randomized Sand Particles Layer */
 body::before {
 	content: '';
 	position: fixed;
@@ -20,15 +20,16 @@ body::before {
 	left: -50%;
 	width: 200%;
 	height: 200%;
-	/* Layered gradients create completely randomized particle clusters without grid alignment */
+	/* Expanded size ratios and multiple layers to cover the whole viewport evenly */
 	background-image: 
 		radial-gradient(circle, #f4d06f 1.5px, transparent 1.5px),
 		radial-gradient(circle, #d4a373 2px, transparent 2px),
 		radial-gradient(circle, #bc6c25 1px, transparent 1px),
-		radial-gradient(circle, #e9c46a 1.25px, transparent 1.25px);
-	background-size: 230px 310px, 410px 270px, 170px 390px, 350px 190px;
-	background-position: 10px 40px, 120px 80px, 200px 150px, 80px 220px;
-	animation: windflow 20s linear infinite;
+		radial-gradient(circle, #e9c46a 1.25px, transparent 1.25px),
+		radial-gradient(circle, #f4d06f 1px, transparent 1px);
+	background-size: 150px 150px, 220px 180px, 110px 130px, 190px 210px, 260px 160px;
+	background-position: 0 0, 40px 60px, 80px 20px, 120px 90px, 50px 140px;
+	animation: windflow 18s linear infinite;
 	z-index: -2;
 	pointer-events: none;
 }
@@ -39,7 +40,7 @@ body::before {
 		transform: translate(0, 0);
 	}
 	100% {
-		transform: translate(410px, 0); /* Matches background-size width for a seamless loop */
+		transform: translate(220px, 0); /* Perfectly matches the background grid scale for a seamless loop */
 	}
 }
 
