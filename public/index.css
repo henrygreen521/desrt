@@ -24,6 +24,66 @@ body {
 	margin: 0px 16px;
 }
 
+/* Navigation Bar Styles */
+.sj-nav-bar {
+	background: #1a1a1a;
+	border-bottom: 1px solid #333;
+	display: flex;
+	align-items: center;
+	padding: 8px 12px;
+	gap: 8px;
+	position: sticky;
+	top: 0;
+	z-index: 1000;
+}
+
+.sj-nav-buttons {
+	display: flex;
+	gap: 4px;
+}
+
+.sj-nav-btn {
+	background: none;
+	border: 1px solid #444;
+	color: #fff;
+	padding: 6px 10px;
+	cursor: pointer;
+	border-radius: 4px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: background-color 0.2s, border-color 0.2s;
+}
+
+.sj-nav-btn:hover {
+	background-color: #333;
+	border-color: #555;
+}
+
+.sj-nav-btn:active {
+	background-color: #444;
+}
+
+.sj-url-bar-container {
+	flex: 1;
+	display: flex;
+	min-width: 0;
+}
+
+.sj-url-display {
+	width: 100%;
+	background: #222;
+	border: 1px solid #444;
+	color: #ccc;
+	padding: 6px 12px;
+	border-radius: 4px;
+	font-family: "Courier New", Courier, monospace;
+	font-size: 13px;
+	outline: none;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
 #sj-frame {
 	border: none;
 	position: absolute;
