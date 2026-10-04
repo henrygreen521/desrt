@@ -6,7 +6,7 @@
 			name="viewport"
 			content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
 		/>
-		<title>Scramjet</title>
+		<title>Desrt.</title>
 
 		<link rel="shortcut icon" content="favicon.webp" />
 	
@@ -20,21 +20,21 @@
 	</head>
 
 	<body>
-		<!-- Navigation Bar (hidden until browsing) -->
-		<div id="sj-nav-bar" class="sj-nav-bar" style="display: none;">
+		<!-- Browser-style navigation bar -->
+		<div id="sj-nav-bar" class="sj-nav-bar">
 			<div class="sj-nav-buttons">
-				<button id="sj-home-btn" class="sj-nav-btn" title="Home">
+				<button id="sj-home-btn" class="sj-nav-btn" title="Home" type="button">
 					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 						<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
 						<polyline points="9 22 9 12 15 12 15 22"></polyline>
 					</svg>
 				</button>
-				<button id="sj-back-btn" class="sj-nav-btn" title="Back">
+				<button id="sj-back-btn" class="sj-nav-btn" title="Back" type="button">
 					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<path d="M19 12H5M12 19l-7-7 7-7"/>
+						<path d="M19 12H5M12 19l-7-7 7-7"></path>
 					</svg>
 				</button>
-				<button id="sj-reload-btn" class="sj-nav-btn" title="Reload">
+				<button id="sj-reload-btn" class="sj-nav-btn" title="Reload" type="button">
 					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 						<polyline points="23 4 23 10 17 10"></polyline>
 						<path d="M20.49 15a9 9 0 1 1-2-8.83"></path>
@@ -42,51 +42,289 @@
 				</button>
 			</div>
 			<div class="sj-url-bar-container">
-				<input id="sj-url-display" class="sj-url-display" type="text" readonly />
+				<input id="sj-url-display" class="sj-url-display" type="text" readonly value="about:blank" />
 			</div>
 		</div>
 
-		<div title="Scramjet Logo" class="flex-center logo-wrapper header-center">
-			<img class="logo" src="sj.png" alt="Scramjet" />
-			<h1>Scramjet | MW</h1>
-		</div>
-		<div class="flex-center desc left-margin">
-			<p>
-				Scramjet is an experimental interception based web proxy designed to
-				evade internet censorship, bypass arbitrary web browser restrictions and
-				innovate web proxy technologies.
-			</p>
-		</div>
+		<div id="sj-main-content" class="sj-main-content">
+			<div title="Scramjet Logo" class="flex-center logo-wrapper header-center">
+				<img class="logo" src="sj.png" alt="Scramjet" />
+				<h1>Scramjet | MW</h1>
+			</div>
+			<div class="flex-center desc left-margin">
+				<p>
+					Scramjet is an experimental interception based web proxy designed to
+					evade internet censorship, bypass arbitrary web browser restrictions and
+					innovate web proxy technologies.
+				</p>
+			</div>
 
-		<form id="sj-form" class="flex-center">
-			<input
-				id="sj-search-engine"
-				value="https://duckduckgo.com/?q=%s"
-				type="hidden"
-			/>
-			<input id="sj-address" type="text" placeholder="Search the web freely" />
-		</form>
-		<div class="desc left-margin">
-			<p id="sj-error"></p>
-			<pre id="sj-error-code"></pre>
+			<form id="sj-form" class="flex-center">
+				<input
+					id="sj-search-engine"
+					value="https://duckduckgo.com/?q=%s"
+					type="hidden"
+				/>
+				<input id="sj-address" type="text" placeholder="Search the web freely" />
+			</form>
+			<div class="desc left-margin">
+				<p id="sj-error"></p>
+				<pre id="sj-error-code"></pre>
+			</div>
+			<footer>
+				<div>
+					<a
+						title="The Mercury Workshop GitHub organization"
+						href="https://github.com/MercuryWorkshop"
+					>Mercury Workshop</a
+					>
+					<a
+						title="The example demo app for Scramjet"
+						href="https://github.com/MercuryWorkshop/Scramjet-Demo"
+					>GitHub</a
+					>
+					<a title="License information" href="credits.html">Credits</a>
+				</div>
+				<div>
+					<span>Scramjet &copy; MW 2025</span>
+				</div>
+			</footer>
 		</div>
-		<footer>
-			<div>
-				<a
-					title="The Mercury Workshop GitHub organization"
-					href="https://github.com/MercuryWorkshop"
-				>Mercury Workshop</a
-				>
-				<a
-					title="The example demo app for Scramjet"
-					href="https://github.com/MercuryWorkshop/Scramjet-Demo"
-				>GitHub</a
-				>
-				<a title="License information" href="credits.html">Credits</a>
-			</div>
-			<div>
-				<span>Scramjet &copy; MW 2025</span>
-			</div>
-		</footer>
 	</body>
 </html>
+public/index.css
+
+CSS
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap");
+
+body {
+	font-family: "Roboto", Arial, Helvetica, sans-serif;
+	margin: 0;
+	background: #111;
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+.flex-center {
+	display: flex;
+	justify-content: center;
+}
+
+.header-center {
+	align-items: center;
+	flex-direction: column;
+	margin-top: 10%;
+}
+
+.left-margin {
+	margin: 0px 16px;
+}
+
+/* Navigation bar */
+#sj-nav-bar {
+	background: #1a1a1a;
+	border-bottom: 1px solid #333;
+	display: flex;
+	align-items: center;
+	padding: 8px 12px;
+	gap: 8px;
+	position: sticky;
+	top: 0;
+	z-index: 1000;
+	flex-shrink: 0;
+}
+
+.sj-nav-buttons {
+	display: flex;
+	gap: 4px;
+	flex-shrink: 0;
+}
+
+.sj-nav-btn {
+	background: none;
+	border: 1px solid #444;
+	color: #fff;
+	padding: 8px 10px;
+	cursor: pointer;
+	border-radius: 6px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: background-color 0.2s ease, border-color 0.2s ease;
+	flex-shrink: 0;
+}
+
+.sj-nav-btn:hover {
+	background-color: #333;
+	border-color: #555;
+}
+
+.sj-nav-btn:active {
+	background-color: #444;
+}
+
+.sj-nav-btn svg {
+	display: block;
+}
+
+.sj-url-bar-container {
+	flex: 1;
+	display: flex;
+	min-width: 0;
+}
+
+.sj-url-display {
+	width: 100%;
+	background: #222;
+	border: 1px solid #444;
+	color: #eee;
+	padding: 8px 12px;
+	border-radius: 6px;
+	font-family: "Courier New", Courier, monospace;
+	font-size: 13px;
+	outline: none;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.sj-main-content {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+}
+
+#sj-frame {
+	border: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: #111;
+	z-index: 500;
+}
+
+#sj-error {
+	color: #ff6666 !important;
+	white-space: pre-wrap;
+}
+
+#sj-error-code {
+	font-size: 12px;
+	color: #fff;
+	font-family: "Courier New", Courier, monospace;
+}
+
+.logo {
+	height: 25vh;
+}
+
+.logo-wrapper .text {
+	font-size: 75px;
+	color: #fff;
+}
+
+.logo-wrapper h1 {
+	color: white;
+}
+
+footer {
+	margin: 0 16px;
+	margin-top: auto;
+	display: flex;
+	flex-direction: column;
+	line-height: 30px;
+	margin-bottom: 20px;
+}
+
+footer > div {
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	flex-wrap: wrap;
+	margin-bottom: 15px;
+}
+
+footer a,
+footer span {
+	margin: 0 15px;
+	text-decoration: none;
+	color: #fff;
+	font-size: 15px;
+}
+
+footer a {
+	cursor: pointer;
+}
+
+footer a:hover {
+	text-decoration: underline;
+}
+
+.desc p {
+	width: 560px;
+	color: rgba(253, 253, 253, 0.514);
+}
+
+#sj-address {
+	background: none;
+	font-family: inherit;
+	padding: 0px 17px;
+	height: 48px;
+	border: 1px solid rgb(255, 255, 255, 0.2);
+	color: var(--text-color);
+	border-radius: 3px;
+	outline: none;
+	width: 350px;
+	margin-top: 5px;
+	border-radius: 50px;
+	color: #fff;
+	transition: border-radius 0.1s;
+}
+
+#sj-address:focus {
+	border: 1px solid rgba(253, 253, 253, 0.514);
+	border-radius: 6px;
+}
+
+.credit {
+	border-radius: 10px;
+	padding: 10px;
+	display: block;
+	border: #fff 1px solid;
+	color: #fff;
+	display: flex;
+	flex-wrap: wrap;
+	margin-bottom: 15px;
+}
+
+.credit label {
+	margin-left: auto;
+	margin-right: 15px;
+}
+
+.credit a,
+.credit label {
+	color: white;
+	text-decoration: underline;
+	text-align: right;
+}
+
+.credit pre {
+	display: none;
+	width: 100%;
+}
+
+.credit label::after {
+	content: "show license";
+	cursor: pointer;
+}
+
+.credit input:checked + label::after {
+	content: "hide license";
+}
+
+.credit input:checked ~ pre {
+	display: block;
+}
