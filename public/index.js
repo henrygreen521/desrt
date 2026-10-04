@@ -69,7 +69,6 @@ function handleDesrtProtocol() {
 		if (url === "home") {
 			showHome();
 		} else {
-			// Handle other desrt:// URLs
 			address.value = url;
 			form.dispatchEvent(new Event("submit"));
 		}
@@ -154,7 +153,6 @@ form.addEventListener("submit", async (event) => {
 		]);
 	}
 
-	// Hide main content, show frame
 	mainContent.style.display = "none";
 
 	const frame = scramjet.createFrame();
@@ -192,13 +190,11 @@ reloadBtn.addEventListener("click", () => {
 	}
 });
 
-// Initialize home screen on page load
 document.addEventListener("DOMContentLoaded", () => {
 	showHome();
 	handleDesrtProtocol();
 });
 
-// Handle desrt:// protocol immediately if page is already loaded
 if (document.readyState === "loading") {
 	document.addEventListener("DOMContentLoaded", handleDesrtProtocol);
 } else {
