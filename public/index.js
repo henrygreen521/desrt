@@ -45,6 +45,47 @@ const connection = new BareMux.BareMuxConnection("/baremux/worker.js");
 let currentFrame = null;
 let urlUpdateInterval = null;
 
+// Register desrt:// protocol handler
+if (navigator.registerProtocolHandler) {
+	try {
+		navigator.registerProtocolHandler(
+			"web+desrt",
+			window.location.origin + "/?desrt=%s",
+			"Desrt"
+		);
+	} catch (err) {
+		console.warn("Could not register protocol handler:", err);
+	}
+}
+
+// Handle desrt:// URLs from query parameters
+function handleDesrtProtocol() {
+	const params = new URLSearchParams(window.location.search);
+	const desrtUrl = params.get("desrt");
+	
+	if (desrtUrl) {
+		const url = desrtUrl.replace(/^web\+desrt:\/\//, "");
+		
+		if (url === "home") {
+			// Navigate to home
+			if (currentFrame && currentFrame.frame && currentFrame.frame.parentNode) {
+				currentFrame.frame.parentNode.removeChild(currentFrame.frame);
+				currentFrame = null;
+			}
+			mainContent.style.display = "flex";
+			address.value = "";
+			urlDisplay.value = "about:blank";
+			address.focus();
+			// Clean up URL bar
+			window.history.replaceState({}, document.title, "/");
+		} else {
+			// Handle other desrt:// URLs
+			address.value = url;
+			form.dispatchEvent(new Event("submit"));
+		}
+	}
+}
+
 function updateURLDisplay(url) {
 	try {
 		const urlObj = new URL(url);
@@ -156,3 +197,7 @@ reloadBtn.addEventListener("click", () => {
 		console.error("Could not reload:", err);
 	}
 });
+
+// Handle desrt:// protocol on page load
+document.addEventListener("DOMContentLoaded", handleDesrtProtocol);
+handleDesrtProtocol();
