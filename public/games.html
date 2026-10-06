@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Custom Game Grid</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap");
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body { 
+      font-family: "Roboto", system-ui, sans-serif; 
+      background-color: #2b1f0c; /* Deep, dark yellowish-brown desert base color */
+      color: #eee; 
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Full-Screen Randomized Sand Particles Layer */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background-image: 
+        radial-gradient(circle, #f4d06f 1.5px, transparent 1.5px),
+        radial-gradient(circle, #d4a373 2px, transparent 2px),
+        radial-gradient(circle, #bc6c25 1px, transparent 1px),
+        radial-gradient(circle, #e9c46a 1.25px, transparent 1.25px),
+        radial-gradient(circle, #f4d06f 1px, transparent 1px);
+      background-size: 150px 150px, 220px 180px, 110px 130px, 190px 210px, 260px 160px;
+      background-position: 0 0, 40px 60px, 80px 20px, 120px 90px, 50px 140px;
+      animation: windflow 18s linear infinite;
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    /* Keyframes for smooth, looping sideways wind flow to the right */
+    @keyframes windflow {
+      0% {
+        transform: translate(0, 0);
+      }
+      100% {
+        transform: translate(220px, 0);
+      }
+    }
+
+    /* Subtle Vignette Overlay to depth-enhance the desert mood */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: radial-gradient(circle, rgba(43,31,12,0) 40%, rgba(18,12,4,0.75) 100%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .header {
+      padding: 20px 24px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      background: rgba(26, 26, 26, 0.85);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid #423013;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .header h1 { font-size: 20px; margin-right: auto; color: #d4a373; font-weight: 700; }
+    
+    .search {
+      padding: 8px 14px;
+      border-radius: 6px;
+      border: 1px solid #543f1b;
+      background: rgba(30, 21, 9, 0.8);
+      color: #eee;
+      font-size: 14px;
+      outline: none;
+      min-width: 220px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .search:focus { 
+      border-color: #d4a373; 
+      background: rgba(30, 21, 9, 0.95);
+    }
+
+    .categories {
+      display: flex;
+      gap: 8px;
+      padding: 16px 24px;
+      overflow-x: auto;
+    }
+    .cat-btn {
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid #543f1b;
+      background: rgba(51, 40, 20, 0.5);
+      color: #c4ab89;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+    }
+    .cat-btn:hover {
+      background-color: #63491d;
+      border-color: #d4a373;
+      color: #fff;
+    }
+    .cat-btn.active {
+      background: #d4a373;
+      color: #2b1f0c;
+      border-color: #d4a373;
+      font-weight: 600;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 16px;
+      padding: 8px 24px 24px;
+      flex: 1;
+    }
+
+    .card {
+      position: relative;
+      aspect-ratio: 1;
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      background: rgba(30, 21, 9, 0.6);
+      border: 1px solid #423013;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: #d4a373;
+    }
+    .card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .card .name {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 10px 8px;
+      background: linear-gradient(to top, rgba(27,19,7,0.95), transparent);
+      font-size: 12px;
+      font-weight: 600;
+      opacity: 0;
+      transition: opacity .15s;
+      color: #fff;
+    }
+    .card:hover .name { opacity: 1; }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      padding: 16px 24px 32px;
+    }
+    .page-btn {
+      padding: 6px 14px;
+      border-radius: 6px;
+      border: 1px solid #543f1b;
+      background: rgba(51, 40, 20, 0.5);
+      color: #eee;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .page-btn:hover {
+      background-color: #63491d;
+      border-color: #d4a373;
+    }
+    .page-btn.active {
+      background: #d4a373;
+      color: #2b1f0c;
+      border-color: #d4a373;
+      font-weight: 600;
+    }
+    .page-btn:disabled { opacity: .3; cursor: default; }
+
+    .loading { text-align: center; padding: 60px; color: #c4ab89; grid-column: 1 / -1; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>My Games</h1>
+    <input class="search" type="text" placeholder="Search games...">
+  </div>
+  <div class="categories"></div>
+  <div class="grid" id="grid"></div>
+  <div class="pagination" id="pagination"></div>
+
+  <script src="https://cdn.jsdelivr.net/gh/luminsdk/script@latest/lumin.min.js"></script>
+  <script>
+    const grid = document.getElementById('grid');
+    const pagination = document.getElementById('pagination');
+    const searchInput = document.querySelector('.search');
+    const catBar = document.querySelector('.categories');
+
+    const PAGE_SIZE = 24;
+    let currentPage = 1;
+    let currentQuery = '';
+    let currentCategory = '';
+
+    // ---- Init ----
+    (async () => {
+      await Lumin.init({
+        headless: true,
+        onReady: () => console.log('Lumin connected'),
+        onError: (err) => console.error('Lumin error:', err),
+      });
+
+      // Load categories
+      const { categories } = await Lumin.getCategories();
+      renderCategories(['All', ...categories]);
+
+      // Load first page
+      await loadPage(1);
+    })();
+
+    // ---- Search (debounced) ----
+    let debounce;
+    searchInput.addEventListener('input', (e) => {
+      clearTimeout(debounce);
+      debounce = setTimeout(() => {
+        currentQuery = e.target.value.trim();
+        currentPage = 1;
+        loadPage(1);
+      }, 300);
+    });
+
+    // ---- Categories ----
+    function renderCategories(cats) {
+      catBar.innerHTML = '';
+      cats.forEach(cat => {
+        const btn = document.createElement('button');
+        btn.className = 'cat-btn' + (cat === 'All' && !currentCategory ? ' active' : '');
+        btn.textContent = cat;
+        btn.onclick = () => {
+          currentCategory = cat === 'All' ? '' : cat;
+          currentPage = 1;
+          catBar.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          loadPage(1);
+        };
+        catBar.appendChild(btn);
+      });
+    }
+
+    // ---- Load & render a page ----
+    async function loadPage(page) {
+      grid.innerHTML = '<div class="loading">Loading...</div>';
+      pagination.innerHTML = '';
+
+      const result = await Lumin.getGames({
+        page,
+        limit: PAGE_SIZE,
+        q: currentQuery,
+      });
+
+      currentPage = page;
+      grid.innerHTML = '';
+
+      // Render cards, resolving images in parallel
+      const imgUrls = await Promise.all(
+        result.games.map(g => Lumin.getImageUrl(g.image_token))
+      );
+
+      result.games.forEach((game, i) => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <img src="${imgUrls[i]}" alt="${game.name}" loading="lazy">
+          <div class="name">${game.name}</div>
+        `;
+        card.onclick = () => Lumin.loadGame(game.id);
+        grid.appendChild(card);
+      });
+
+      // Pagination
+      renderPagination(result.pages);
+    }
+
+    function renderPagination(totalPages) {
+      pagination.innerHTML = '';
+      if (totalPages <= 1) return;
+
+      const prev = document.createElement('button');
+      prev.className = 'page-btn';
+      prev.textContent = 'Prev';
+      prev.disabled = currentPage === 1;
+      prev.onclick = () => loadPage(currentPage - 1);
+      pagination.appendChild(prev);
+
+      for (let p = 1; p <= totalPages; p++) {
+        const btn = document.createElement('button');
+        btn.className = 'page-btn' + (p === currentPage ? ' active' : '');
+        btn.textContent = p;
+        btn.onclick = () => loadPage(p);
+        pagination.appendChild(btn);
+      }
+
+      const next = document.createElement('button');
+      next.className = 'page-btn';
+      next.textContent = 'Next';
+      next.disabled = currentPage === totalPages;
+      next.onclick = () => loadPage(currentPage + 1);
+      pagination.appendChild(next);
+    }
+  </script>
+</body>
+</html>
